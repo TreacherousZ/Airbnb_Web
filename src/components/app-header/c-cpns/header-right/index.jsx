@@ -1,10 +1,21 @@
-import React, { memo } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { RightWrapper } from './style'
 import IconGlobal from '@/assets/svg/icon_global'
 import IconMenu from '@/assets/svg/icon_menu'
 import IconAvatar from '@/assets/svg/icon_avatar'
 
 const HeaderRight = memo(() => {
+  const [showPanel, setShowPanel] = useState(false)
+  
+  useEffect(()=>{
+    window.addEventListener('click', ()=> {
+      setShowPanel(false)
+    }, true)
+  },[])
+  
+  function profilcClickHandle() {
+    setShowPanel(true)
+  }
   return (
     <RightWrapper>
       <div className='btns'>
@@ -15,9 +26,24 @@ const HeaderRight = memo(() => {
         </span>
       </div>
 
-      <div className='profile'>
+      <div className='profile' onClick={profilcClickHandle}>
         <IconMenu />
         <IconAvatar />
+        {showPanel && (
+          <div className='panel'>
+            <div className='top'>
+
+              <div className='item register'>注册</div>
+              <div className='item login'>登录</div>
+            </div>
+            <div className='bottom'>
+              <div className='item'>出租房源</div>
+              <div className='item'>开展体验</div>
+              <div className='item'>帮助</div>
+            </div>
+          </div>
+        )}
+
       </div>
     </RightWrapper>
   )

@@ -1,33 +1,44 @@
- import React, { memo, useEffect, useState } from 'react'
-import hyRequest from '@/services'
+import React, { memo, useEffect } from 'react';
+import { HomeWrapper } from './style';
+import HomeBanner from './c-cpns/home-banner';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { fetchHomeDataAction } from '@/store/modules/home';
+import SectionHeader from '@/components/selection-header';
 
- 
- const Home = memo(() => {
-  //定义状态
-  const [highScore, setHighScore ] = useState({})
+const Home = memo(() => {
+  const { goodPriceInfo } = useSelector(
+    (state) => ({
+      goodPriceInfo: state.home.goodPriceInfo,
+    }),
+    shallowEqual
+  );
 
-    
-  //网络请求代码
-  useEffect(() =>{
-    hyRequest.get({url:'/home/highscore'}).then(res=>{
-      setHighScore(res)
-    })
-  },[])
+  const dispatch = useDispatch();
 
-   return (
-     <div>
-      <h2>{highScore.title}</h2>
-      <h4>{highScore.subtitle}</h4>
-      <ul>
-        {
-          //可选链
-          highScore?.list?.map((item) => {
-            return <li key={item.id}>{item.name}</li>
-          })
-        }
-      </ul>
-     </div>
-   )
- })
- 
- export default Home
+  useEffect(() => {
+    dispatch(fetchHomeDataAction('xxx'));
+  }, [dispatch]);
+
+  return (
+    <HomeWrapper>
+      <HomeBanner />
+      <div className="content">
+        <div className='good-price'>
+          <SectionHeader title={goodPriceInfo.title} />
+          {/* 确保 goodPriceInfo 和 list 已经定义 */}
+          <ul>
+            {goodPriceInfo?.list?.length > 0 ? (
+              goodPriceInfo.list.map((item) => (
+                <li key={item.id}>{item.name}</li>
+              ))
+            ) : (
+              <li>No items available</li>
+            )}
+          </ul>
+        </div>
+      </div>
+    </HomeWrapper>
+  );
+});
+
+export default Home;
