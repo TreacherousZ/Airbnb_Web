@@ -3,10 +3,12 @@ import React, { memo } from 'react'
 import { ItemWrapper } from './style'
 import { Rating } from '@mui/material'
 const RoomItem = memo((props) => {
-  const { itemData } = props //从外部传入的数据在这里拿到
+  const { itemData, itemWidth = '25%' } = props //从外部传入的数据在这里拿到
 
   return (
-    <ItemWrapper verifyColor={itemData?.verify_info?.text_color || '#39576a'}>
+    <ItemWrapper 
+    verifyColor={itemData?.verify_info?.text_color || '#39576a'}
+    itemWidth={itemWidth}>
       <div className='inner'>
         <div className='cover'>
           <img src={itemData.picture_url} />
@@ -35,7 +37,8 @@ const RoomItem = memo((props) => {
 })
 
 RoomItem.propTypes = {  //从外部传入进来的数据
-  itemData: PropTypes.object
+  itemData: PropTypes.object,
+  itemWidth:PropTypes.object
 }
 
 export default RoomItem
