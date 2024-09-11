@@ -5,18 +5,24 @@ import { fetchHomeDataAction } from '@/store/modules/home'
 import HomeBanner from './c-cpns/home-banner'
 import { HomeWrapper } from './style'
 
+
 import HomeSectionV1 from './c-cpns/home-section-v1'
-import SectionHeader from '@/components/section-header'
-import SectionRooms from '@/components/section-rooms'
+import HomeSectionV2 from './c-cpns/home-section-v2'
+import { isEmptyO } from '@/utils'
 
 const Home = memo(() => {
+
+
+
   /** 从redux中获取数据 */
-  const { goodPriceInfo, highScoreInfo, discountInfo } = useSelector((state) => ({
+  const { goodPriceInfo, highScoreInfo, discountInfo, recommendInfo } = useSelector((state) => ({
     goodPriceInfo: state.home.goodPriceInfo,
     highScoreInfo: state.home.highScoreInfo,
-    discountInfo: state.home.discountInfo
-    
+    discountInfo: state.home.discountInfo,
+    recommendInfo: state.home.recommendInfo
   }), shallowEqual)
+
+
 
   /** 派发异步的事件: 发送网络请求 */
   const dispatch = useDispatch()
@@ -26,14 +32,19 @@ const Home = memo(() => {
 
   return (
     <HomeWrapper>
-      <HomeBanner/>
+      <HomeBanner />
       <div className='content'>
-        <div className='discount'>
+        {/* <div className='discount'>
           <SectionHeader title={discountInfo.title} subtitle={discountInfo.subtitle} />
-          <SectionRooms roomList={discountInfo.dest_list?.['成都']} itemWidth='33.333333%'/>
-        </div>
-       <HomeSectionV1 infoData={goodPriceInfo}/>
-       <HomeSectionV1 infoData={highScoreInfo}/>
+          <SectionTabs tabNames={tabNames} tabClick={tabClickHandle}/>
+          <SectionRooms roomList={discountInfo.dest_list?.[name]} itemWidth='33.333333%'/>
+        </div> */}
+
+        {isEmptyO(discountInfo) && <HomeSectionV2 infoData={discountInfo} />}
+        {isEmptyO(recommendInfo) && <HomeSectionV2 infoData={recommendInfo} />}
+        
+        {isEmptyO(goodPriceInfo) && <HomeSectionV1 infoData={goodPriceInfo} />}
+        {isEmptyO(highScoreInfo) && <HomeSectionV1 infoData={highScoreInfo} />}
       </div>
     </HomeWrapper>
   )
