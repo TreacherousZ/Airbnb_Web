@@ -3,7 +3,7 @@ import { BannerWrapper } from './stlyle'
 
 const HomeBanner = memo(() => {
   return (
-    <BannerWrapper>HomeBanner</BannerWrapper>
+    <BannerWrapper></BannerWrapper>
   )
 })
 
