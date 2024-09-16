@@ -1,3 +1,4 @@
-export function isEmptyO(obj) {
-  return !!Object.keys(obj).length
+
+export function isEmptyObject(obj){
+    return !!Object.keys(obj).length //!!转成bool类型
 }

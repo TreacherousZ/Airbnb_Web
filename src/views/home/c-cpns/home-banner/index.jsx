@@ -1,9 +1,11 @@
 import React, { memo } from 'react'
-import { BannerWrapper } from './stlyle'
+import { BannerWrapper } from './style'
+
 
 const HomeBanner = memo(() => {
   return (
-    <BannerWrapper></BannerWrapper>
+    <BannerWrapper>
+    </BannerWrapper>
   )
 })
 

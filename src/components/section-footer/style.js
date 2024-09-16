@@ -1,24 +1,23 @@
 import styled from "styled-components";
 
-
 export const FooterWrapper = styled.div`
-  display:flex;
-  margin-top: 10px;
-  
-  .info{
+    margin-top: 10px;
     display: flex;
-    align-items: center;
-    cursor: pointer;
+    .info {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        font-size: 17px;
+        font-weight: 700;
+        color: ${props => props.color};
 
-    font-size: 17px;
-    font-weight: 700;
-    color: ${props => props.color};
-    &:hover {
-      text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
+
+        .text {
+            margin-right: 6px;
+        }
     }
 
-    .text{
-      margin: 6px;
-    }
-  }
 `

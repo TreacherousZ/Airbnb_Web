@@ -1,40 +1,43 @@
+import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { memo, useState } from 'react'
+import ScrollView from '../../base-ui/scroll-view'
 import { TabsWrapper } from './style'
-import classNames from 'classnames'
-import ScrollView from '@/base-ui/scroll-view'
-
 
 const SectionTabs = memo((props) => {
-  const { tabNames = [], tabClick } = props //给一个默认值为空，防止后台没有加载过来的情况
-  const [currentIndex, setCurrentIndex] = useState(0)
-  function itemClickHandle(index, item) {
-    setCurrentIndex(index)
-    tabClick(index, item)
-  }
+    const { tabNames=[] ,tabClick} =props
+    const [currentIndex, setCurrentIndex] = useState(0) //对于点击事件打印的值，需要定义一个索引接收和改变
+
+    function itemClickHandle(index,item){
+        setCurrentIndex(index)
+        tabClick(index,item) //调用函数，把index和item传出去,item就是城市name
+    }
 
   return (
     <TabsWrapper>
-      <ScrollView>
+       <ScrollView>
         {
-          tabNames.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className={classNames('item', { active: index === currentIndex })}
-                onClick={e => itemClickHandle(index, item)}>{item}</div>
-            )
-          })
+            tabNames.map((item ,index)=>{
+                return(
+                    <div 
+                        key ={index}
+                        className ={classNames("item",{active: index===currentIndex})} //npm install classnames
+                        onClick={e=> itemClickHandle(index,item)}
+                    >
+                        {item}
+
+                    </div>
+                )
+            })
         }
-      </ScrollView>
+       </ScrollView>
     </TabsWrapper>
   )
 })
 
-//因为是一个展示tab 一定是后期有地方王者里面传入数据的
 SectionTabs.propTypes = {
-  tabNames: PropTypes.array
-}
+    tabNames :PropTypes.array,
 
+}
 
 export default SectionTabs

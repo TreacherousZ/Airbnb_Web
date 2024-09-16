@@ -1,50 +1,58 @@
-import React, { memo, useState, useEffect } from 'react'
-import { RightWrapper } from './style'
+import IconAvatar from '@/assets/svg/icon_avatar'
 import IconGlobal from '@/assets/svg/icon_global'
 import IconMenu from '@/assets/svg/icon_menu'
-import IconAvatar from '@/assets/svg/icon_avatar'
+import React, { memo, useEffect, useState } from 'react'
+import { RightWrapper } from './style'
 
 const HeaderRight = memo(() => {
-  const [showPanel, setShowPanel] = useState(false)
-  
+  /* 定义组件内部状态 */
+  const [showPanel, setShowPanel]=useState(false)
+
+  /* 副作用代码 */
   useEffect(()=>{
-    window.addEventListener('click', ()=> {
+    function windowHandleClick(){
       setShowPanel(false)
-    }, true)
+    }
+    window.addEventListener("click",windowHandleClick ,true) //监听事件是一个冒泡事件，在点击profile的时候事件向上被window监听，又被设置为false，所以这里监听事件的第三个参数设置为true，将冒泡事件设置为捕获事件
+    return ()=>{
+      window.removeEventListener("click",windowHandleClick,true)
+    }
   },[])
-  
-  function profilcClickHandle() {
+
+  /* 事件处理函数 */
+  function profileClickHandle(){
     setShowPanel(true)
   }
+
   return (
     <RightWrapper>
-      <div className='btns'>
-        <span className='btn'>登录</span>
-        <span className='btn'>注册</span>
-        <span className='btn'>
-          <IconGlobal />
-        </span>
-      </div>
+        <div className='btns'>
+          <span className='btn'>登录</span>
+          <span className='btn'>注册</span>
+          <span className='btn'>
+            <IconGlobal/>
+          </span>
+        </div>
 
-      <div className='profile' onClick={profilcClickHandle}>
-        <IconMenu />
-        <IconAvatar />
-        {showPanel && (
-          <div className='panel'>
+        <div className='profile' onClick={profileClickHandle}>
+          <IconMenu/>
+          <IconAvatar/>
+
+         {
+          showPanel && ( 
+          <div className='panel' >
             <div className='top'>
-
               <div className='item register'>注册</div>
               <div className='item login'>登录</div>
             </div>
-            <div className='bottom'>
+            <div className='buttom'>
               <div className='item'>出租房源</div>
               <div className='item'>开展体验</div>
               <div className='item'>帮助</div>
-            </div>
           </div>
-        )}
-
-      </div>
+      </div>)
+         }
+        </div>
     </RightWrapper>
   )
 })

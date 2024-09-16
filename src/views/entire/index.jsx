@@ -1,23 +1,25 @@
-import React, { memo, useEffect } from 'react'
-import { EntireWrapper } from './style'
-import EntireFilter from './c-cpns/entire-filter'
-import EntireRooms from './c-cpns/entire-rooms'
-import EntirePagination from './c-cpns/entire-pagination'
-import { useDispatch } from 'react-redux'
 import { fetchRoomListAction } from '@/store/modules/entire/actionCreators'
+import { changeHeaderConfigAction } from '@/store/modules/main'
+import React, { memo, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import EntireFilter from './c-cpns/entire-filter'
+import EntirePagination from './c-cpns/entire-pagination'
+import EntireRooms from './c-cpns/entire-rooms'
+import { EntireWrapper } from './style'
 
 const Entire = memo(() => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchRoomListAction())
-  }, [dispatch])
-
+  // 发送网络请求，获取数据，并且保存当前的页面等等
+  const dispatch =useDispatch()
+  useEffect(() =>{
+    dispatch(fetchRoomListAction()) //调用函数，里面又直接调用return的getEntireRoomList函数，相当于dispatch返回的函数
+    dispatch(changeHeaderConfigAction({isFixed: true , topAlpha:false}))
+  },[dispatch])
 
   return (
     <EntireWrapper>
-      <EntireFilter />
-      <EntireRooms />
-      <EntirePagination />
+      <EntireFilter/>
+      <EntireRooms/>
+      <EntirePagination/>
     </EntireWrapper>
   )
 })

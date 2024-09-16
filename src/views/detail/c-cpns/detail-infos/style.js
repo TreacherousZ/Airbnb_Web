@@ -1,4 +1,5 @@
 import styled from "styled-components";
 
-export const RoomsWrapper = styled.div`
+export const InfoWrapper = styled.div`
+
 `
